@@ -19,6 +19,13 @@ def WaitAndClick(By, target):
     except:
         print("Nothing to wait to")
 
+def WaitUntilVisible(By,target):
+    try:
+        WebDriverWait(driver, timeout).until(EC.presence_of_element_located((By, target)))
+        time.sleep(0.5)
+    except:
+        print("Nothing to wait to")
+
 def GetPictures(WebsiteList,iter):
     for e in range(len(WebsiteList)):
         with open(path + str(e) + str(iter) + '.png', 'wb') as file:

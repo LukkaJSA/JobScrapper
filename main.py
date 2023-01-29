@@ -1,6 +1,7 @@
 from scrapp import *
 import time
 from soup import *
+from no_fluff import *
 
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
@@ -15,27 +16,18 @@ driver.fullscreen_window()
 page_count=0
 f = open("C:\\Users\\TECHMAR\\Desktop\\PROJ\\6_NOFLUFF\\output\\joblist.txt","w")
 
-
 WaitAndClick(By.ID, "onetrust-accept-btn-handler")
 WaitAndClick(By.XPATH, "//span[contains(text(),'Kategoria')]")
 WaitAndClick(By.XPATH, "//button[contains(text(),'Testing')]")
 WaitAndClick(By.XPATH, "//button[contains(text(),'Poka')]") #Show results
 
-time.sleep(3)
+page_count = get_pages_count(driver)
+print("Total page count with job offerings is is {pg_count}".format(pg_count=page_count))
 
-pages = driver.find_elements(By.XPATH, "//a[contains(@class,'page-link')]")
-print(type(pages))
-print(len(pages))
+#Find total number of jobs on single site
+elementslist = driver.find_elements(By.XPATH, "//a[contains(@id,'nfj')]")
+number_of_job_offers = len(elementslist)
 
-# Find total number of job pages
-for n in range(len(pages)):
-    print(pages[n].text)
-    try:
-        if page_count<int(pages[n].text):
-                page_count=int(pages[n].text)
-    except:
-        print("Not comparable")
-print("Page count is {pg_count}".format(pg_count=page_count))
 picturelistID = []
 picturelistALL = []
 
@@ -48,6 +40,9 @@ for s in range(1):
         companylist = driver.find_elements(By.XPATH, "//a[contains(@id,'nfj')]//span[contains(@class,'company')]")
         listingtitle = driver.find_elements(By.XPATH, "//a[contains(@id,'nfj')]//h3[contains(@class,'posting-title')]" )
         salary = driver.find_elements(By.XPATH, "//a[contains(@id,'nfj')]//span[contains(@class,'salary')]")
+
+        for i in range(3):
+            go_to_offer(elementslist[i],driver)
 
         for i in range(len(elementslist)):
             driver.execute_script('arguments[0].scrollIntoView(true);', companylist[i])
