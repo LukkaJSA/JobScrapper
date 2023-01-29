@@ -8,12 +8,25 @@ from selenium.webdriver.common.keys import *
 import time
 from scrapp import *
 from soup import *
+from no_fluff_data import *
 
-offer_path = 'C:\\Users\\TECHMAR\\Desktop\\PROJ\\6_NOFLUFF\\output\\'
+
+class JOBLISTING:
+
+	def __init__(self):
+		self.jobtitle = "empty"
+		self.company = "empty"
+		self.expextations = "empty"
+
+	def display(self):
+		print("Job title is {JT}".format(JT = self.jobtitle))
+		print("Company is {CO}".format(CO = self.company))
+		print("Expectations are {EX}".format(EX = self.expextations))
+
 
 def get_pages_count(drv):
 
-	pages = drv.find_elements(By.XPATH, "//a[contains(@class,'page-link')]")
+	pages = drv.find_elements(By.XPATH, Next_page_locator)
 	pg_count = 0
 	# Find total number of job pages
 	for n in range(len(pages)):
@@ -26,7 +39,7 @@ def get_pages_count(drv):
 	return pg_count
 
 
-def scrap_offer(element,drv):
+def scrap_offer(element,drv,job_class):
 	
 	#Store the original window handler
 	original_window = driver.current_window_handle
@@ -47,12 +60,21 @@ def scrap_offer(element,drv):
 	        driver.switch_to.window(window_handle)
 	        break
 
-	WaitUntilVisible(By.XPATH, "//button[contains(text(),'Aplikuj')]")
+	print(get_offer_title(drv))
 
-	scrap_and_write(driver.page_source)
+	WaitUntilVisible(By.XPATH, "//button[contains(text(),'Aplikuj')]")
+	time.sleep(0.5)
+	scrap_and_write(driver.page_source, OUT_Path)
 	#Close the tab or window
 	driver.close()
 
     #Switch back to the old tab or window
 	driver.switch_to.window(original_window)
+
+def get_offer_title(drv):
+	title_element = drv.find_element(By.XPATH,Job_title_locator_page)
+
+	return title
+
+
 
