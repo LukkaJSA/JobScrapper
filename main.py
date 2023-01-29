@@ -2,6 +2,7 @@ from scrapp import *
 import time
 from soup import *
 from no_fluff import *
+from no_fluff_data import *
 
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
@@ -10,16 +11,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import *
 
-driver.get("Https://nofluffjobs.com")
+driver.get(MAIN_URL)
 driver.fullscreen_window()
 
 page_count=0
-f = open("C:\\Users\\TECHMAR\\Desktop\\PROJ\\6_NOFLUFF\\output\\joblist.txt","w")
+f = open(OUT_Path + "joblist.txt","w")
 
-WaitAndClick(By.ID, "onetrust-accept-btn-handler")
-WaitAndClick(By.XPATH, "//span[contains(text(),'Kategoria')]")
-WaitAndClick(By.XPATH, "//button[contains(text(),'Testing')]")
-WaitAndClick(By.XPATH, "//button[contains(text(),'Poka')]") #Show results
+WaitAndClick(By.ID, RODO_locator)
+WaitAndClick(By.XPATH, Categories_locator)
+WaitAndClick(By.XPATH, Testing_locator)
+WaitAndClick(By.XPATH, Show_offers_locator)
 
 page_count = get_pages_count(driver)
 print("Total page count with job offerings is is {pg_count}".format(pg_count=page_count))
@@ -42,7 +43,7 @@ for s in range(1):
         salary = driver.find_elements(By.XPATH, "//a[contains(@id,'nfj')]//span[contains(@class,'salary')]")
 
         for i in range(3):
-            go_to_offer(elementslist[i],driver)
+            scrap_offer(elementslist[i],driver)
 
         for i in range(len(elementslist)):
             driver.execute_script('arguments[0].scrollIntoView(true);', companylist[i])
@@ -70,7 +71,6 @@ for s in range(1):
         #f.write("\n")
 
         WaitAndClick(By.XPATH, "//span[contains(text(),'»')]")
-        scrapbf(driver.page_source)
 #End of main loop
 
 f.close()

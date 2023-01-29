@@ -15,7 +15,7 @@ def WaitAndClick(By, target):
     try:
         WebDriverWait(driver, timeout).until(EC.presence_of_element_located((By, target)))
         driver.find_element(By, target).click()
-        time.sleep(0.5)
+        time.sleep(1)
     except:
         print("Nothing to wait to")
 

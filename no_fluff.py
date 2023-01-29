@@ -7,6 +7,9 @@ from selenium.webdriver.common.action_chains import *
 from selenium.webdriver.common.keys import *
 import time
 from scrapp import *
+from soup import *
+
+offer_path = 'C:\\Users\\TECHMAR\\Desktop\\PROJ\\6_NOFLUFF\\output\\'
 
 def get_pages_count(drv):
 
@@ -23,7 +26,7 @@ def get_pages_count(drv):
 	return pg_count
 
 
-def go_to_offer(element,drv):
+def scrap_offer(element,drv):
 	
 	#Store the original window handler
 	original_window = driver.current_window_handle
@@ -35,7 +38,6 @@ def go_to_offer(element,drv):
 
 	element.send_keys(Keys.SHIFT, Keys.ENTER)
 	time.sleep(3)
-	print("@@@")
 
 	print(EC.number_of_windows_to_be(2))
 
@@ -46,10 +48,11 @@ def go_to_offer(element,drv):
 	        break
 
 	WaitUntilVisible(By.XPATH, "//button[contains(text(),'Aplikuj')]")
-	time.sleep(4)
-	
+
+	scrap_and_write(driver.page_source)
 	#Close the tab or window
 	driver.close()
 
     #Switch back to the old tab or window
 	driver.switch_to.window(original_window)
+
