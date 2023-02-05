@@ -4,6 +4,7 @@ from soup import *
 from no_fluff import *
 from no_fluff_data import *
 
+
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.common.by import By
@@ -11,8 +12,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import *
 
-job1 = JOBLISTING()
-job1.display()
+#job1 = JOBLISTING()
+#job1.display()
 
 
 driver.get(MAIN_URL)
@@ -22,10 +23,11 @@ page_count=0
 f = open(OUT_Path + "joblist.txt","w")
 
 #Close RODO and select Testing offers
+WaitUntilVisible(By.ID, RODO_locator)
 WaitAndClick(By.ID, RODO_locator)
-#WaitAndClick(By.XPATH, Categories_locator)
-#WaitAndClick(By.XPATH, Testing_locator)
-#WaitAndClick(By.XPATH, Show_offers_locator)
+WaitAndClick(By.XPATH, Categories_locator)
+WaitAndClick(By.XPATH, Testing_locator)
+WaitAndClick(By.XPATH, Show_offers_locator)
 
 #Get pages count with job listings to browse
 #page_count = get_pages_count(driver)
@@ -37,6 +39,7 @@ number_of_job_offers = len(elementslist)
 
 picturelistID = []
 picturelistALL = []
+
 
 job1 = JOBLISTING()
 job1.display()

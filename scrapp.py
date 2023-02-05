@@ -5,22 +5,24 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
+s = Service('C:\\geckodriver.exe')
+driver = webdriver.Firefox(service=s)
+
 import time
 
-timeout = 5
+waittime = 4
 
-def WaitAndClick(By, target):
+def WaitAndClick(By_, target):
     try:
-        WebDriverWait(driver, timeout).until(EC.presence_of_element_located((By, target)))
-        driver.find_element(By, target).click()
+        WebDriverWait(driver, waittime).until(EC.presence_of_element_located((By_, target)))
+        driver.find_element(By_, target).click()
         time.sleep(1)
     except:
-        print("Nothing to wait to")
-
-def WaitUntilVisible(By,target):
+        print("Nothing to click")
+    
+def WaitUntilVisible(By_,target):
     try:
-        WebDriverWait(driver, timeout).until(EC.presence_of_element_located((By, target)))
-        time.sleep(0.5)
+        WebDriverWait(driver, waittime).until(EC.presence_of_element_located((By_, target)))
     except:
         print("Nothing to wait to")
 
@@ -33,6 +35,5 @@ def GetPicture(target, filename, file_path):
     with open(file_path + filename + '.png', 'wb') as file:
         file.write(target.screenshot_as_png)
 
-s = Service('C:\\geckodriver.exe')
 
-driver = webdriver.Firefox(service=s)
+

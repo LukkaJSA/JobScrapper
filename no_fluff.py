@@ -42,39 +42,39 @@ def get_pages_count(drv):
 def scrap_offer(element,drv,job_class):
 	
 	#Store the original window handler
-	original_window = driver.current_window_handle
+	original_window = drv.current_window_handle
 	
 	#Check for other windows open
-	assert len(driver.window_handles) == 1
+	assert len(drv.window_handles) == 1
 
 	#Click the element go to page and wait for site to load
 
 	element.send_keys(Keys.SHIFT, Keys.ENTER)
 	time.sleep(3)
 
-	print(EC.number_of_windows_to_be(2))
+	#print(EC.number_of_windows_to_be(2))
 
 	# Loop through until we find a new window handle
-	for window_handle in driver.window_handles:
+	for window_handle in drv.window_handles:
 	    if window_handle != original_window:
-	        driver.switch_to.window(window_handle)
+	        drv.switch_to.window(window_handle)
 	        break
 
 	print(get_offer_title(drv))
 
 	WaitUntilVisible(By.XPATH, "//button[contains(text(),'Aplikuj')]")
 	time.sleep(0.5)
-	scrap_and_write(driver.page_source, OUT_Path)
+	#scrap_and_write(drv.page_source, OUT_Path)
 	#Close the tab or window
-	driver.close()
+	drv.close()
 
     #Switch back to the old tab or window
 	driver.switch_to.window(original_window)
 
 def get_offer_title(drv):
 	title_element = drv.find_element(By.XPATH,Job_title_locator_page)
-
-	return title
+	title = title_element.text
+	print(title)
 
 
 

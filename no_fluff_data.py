@@ -29,5 +29,4 @@ Picture_locator = "//a[contains(@id,'nfj')]//img" #XPATH
 
 ###Specific offer page
 #Title locator
-Job_title_locator_page = "//a[contains(@id,'posting-header')]//h1"
-
+Job_title_locator_page = "//h1[contains(@class,'font-weight-bold')]"
