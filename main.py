@@ -67,7 +67,7 @@ for s in range(1):
                     picturelistALL.append(picturelist[i])
                     GetPicture(picturelist[i],str(picturelist[i].id),OUT_Path)
 
-        print("Ilosc elementow")
+        print("Ilosc elementow22")
         print(len(picturelistALL))
         print(len(elementslist))
 
